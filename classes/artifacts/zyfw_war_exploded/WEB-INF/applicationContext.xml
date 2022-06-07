@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver">
+		</property>
+		<property name="url"
+				  value="jdbc:mysql://127.0.0.1:3306/zyfw?characterEncoding=utf-8">
+		</property>
+		<property name="username" value="root"></property>
+		<property name="password" value="123456"></property>
+	</bean>
+	<bean id="sessionFactory"
+		  class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQL5Dialect
+				</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>com/model/TAdmin.hbm.xml</value>
+				<value>com/model/TGonggao.hbm.xml</value>
+				<value>com/model/TUser.hbm.xml</value>
+				<value>com/model/THuodong.hbm.xml</value>
+				<value>com/model/Juanzeng.hbm.xml</value>
+				<value>com/model/TLiuyan.hbm.xml</value>
+				<value>com/model/TJieshao.hbm.xml</value>
+				<value>com/model/TLianjie.hbm.xml</value>
+				<value>com/model/TNews.hbm.xml</value>
+				<value>com/model/TCatelog.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="TCatelogDAO" class="com.dao.TCatelogDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="catelogService" class="com.service.catelogService">
+		<property name="catelogDAO">
+			<ref bean="TCatelogDAO" />
+		</property>
+	</bean>
+	<bean id="catelogAction" class="com.action.catelogAction" scope="prototype">
+		<property name="catelogDAO">
+			<ref bean="TCatelogDAO" />
+		</property>
+	</bean>
+
+	<bean id="TNewsDAO" class="com.dao.TNewsDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="newsAction" class="com.action.newsAction" scope="prototype">
+		<property name="newsDAO">
+			<ref bean="TNewsDAO" />
+		</property>
+		<property name="catelogDAO">
+			<ref bean="TCatelogDAO" />
+		</property>
+	</bean>
+
+	<bean id="TLianjieDAO" class="com.dao.TLianjieDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="lianjieAction" class="com.action.lianjieAction" scope="prototype">
+		<property name="lianjieDAO">
+			<ref bean="TLianjieDAO" />
+		</property>
+	</bean>
+
+	<bean id="juanzengAction" class="com.action.JuanzengAction" scope="prototype">
+		<property name="juanzengDAO">
+			<ref bean="juanzengDAO" />
+		</property>
+	</bean>
+	<bean id="juanzengDAO" class="com.dao.JuanzengDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="indexAction" class="com.action.indexAction" scope="prototype">
+		<property name="huodongDAO">
+			<ref bean="THuodongDAO" />
+		</property>
+		<property name="catelogDAO">
+			<ref bean="TCatelogDAO" />
+		</property>
+		<property name="gonggaoDAO">
+			<ref bean="TGonggaoDAO" />
+		</property>
+		<property name="jieshaoDAO">
+			<ref bean="TJieshaoDAO"/>
+		</property>
+
+		<property name="lianjieDAO">
+			<ref bean="TLianjieDAO" />
+		</property>
+	</bean>
+
+	<bean id="TUserDAO" class="com.dao.TUserDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"></ref>
+		</property>
+	</bean>
+
+	<bean id="userAction" class="com.action.UserAction" scope="prototype">
+		<property name="userDAO">
+			<ref bean="TUserDAO" />
+		</property>
+	</bean>
+
+	<!-- 后台的登录 -->
+	<bean id="loginService" class="com.service.loginService">
+		<property name="adminDAO">
+			<ref bean="TAdminDAO" />
+		</property>
+		<property name="userDAO">
+			<ref bean="TUserDAO" />
+		</property>
+	</bean>
+
+	<bean id="TAdminDAO" class="com.dao.TAdminDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="adminAction" class="com.action.adminAction" scope="prototype">
+		<property name="adminDAO">
+			<ref bean="TAdminDAO" />
+		</property>
+	</bean>
+
+	<bean id="TGonggaoDAO" class="com.dao.TGonggaoDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"></ref>
+		</property>
+	</bean>
+	<bean id="gonggaoAction" class="com.action.gonggaoAction" scope="prototype">
+		<property name="gonggaoDAO">
+			<ref bean="TGonggaoDAO" />
+		</property>
+	</bean>
+
+	<bean id="THuodongDAO" class="com.dao.THuodongDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="huodongAction" class="com.action.huodongAction" scope="prototype">
+		<property name="huodongDAO">
+			<ref bean="THuodongDAO" />
+		</property>
+	</bean>
+	<bean id="TLiuyanDAO" class="com.dao.TLiuyanDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="liuyanAction" class="com.action.liuyanAction" scope="prototype">
+		<property name="liuyanDAO">
+			<ref bean="TLiuyanDAO" />
+		</property>
+	</bean>
+
+	<bean id="TJieshaoDAO" class="com.dao.TJieshaoDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="jieshaoAction" class="com.action.jieshaoAction" scope="prototype">
+		<property name="jieshaoDAO">
+			<ref bean="TJieshaoDAO"/>
+		</property>
+	</bean>
+
+</beans>

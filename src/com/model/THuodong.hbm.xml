@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+ 
+<hibernate-mapping>
+    <class name="com.model.THuodong" table="t_huodong">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="increment" />
+        </id>
+        <property name="name" type="java.lang.String">
+            <column name="name" length="50" />
+        </property>
+        <property name="dizhi" type="java.lang.String">
+            <column name="dizhi" length="200" />
+        </property>
+        <property name="info" type="java.lang.String">
+            <column name="info" length="8000" />
+        </property>
+         <property name="pic" type="java.lang.String">
+            <column name="pic"       />
+        </property>
+         <property name="tel" type="java.lang.String">
+            <column name="tel" length="50" />
+        </property>
+        <property name="shijian" type="java.lang.String">
+            <column name="shijian" length="50" />
+        </property>
+         <property name="zt" type="java.lang.String">
+            <column name="zt" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>
